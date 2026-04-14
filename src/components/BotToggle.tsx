@@ -37,8 +37,8 @@ export function BotToggle({
       className={clsx(
         "px-4 py-2 rounded-lg font-semibold text-sm transition",
         disabled
-          ? "bg-slate-200 text-slate-700 hover:bg-slate-300"
-          : "bg-f7red text-white hover:bg-red-700",
+          ? "bg-f7panel2 border border-f7border text-slate-200 hover:bg-f7panel"
+          : "bg-f7red text-white hover:bg-red-700 shadow-lg shadow-f7red/20",
         isPending && "opacity-50"
       )}
     >

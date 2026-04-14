@@ -18,8 +18,10 @@ export function MessageBubble({ message }: { message: ConversationLogRow }) {
     <div className={clsx("flex", outgoing ? "justify-end" : "justify-start")}>
       <div
         className={clsx(
-          "max-w-[70%] rounded-2xl px-4 py-2 shadow-sm",
-          outgoing ? "bg-f7red text-white" : "bg-white text-slate-800"
+          "max-w-[70%] rounded-2xl px-4 py-2 shadow-lg",
+          outgoing
+            ? "bg-f7red text-white"
+            : "bg-f7panel border border-f7border text-slate-100"
         )}
       >
         {message.message_type === "image" && message.media_url && (
@@ -44,7 +46,7 @@ export function MessageBubble({ message }: { message: ConversationLogRow }) {
         <div
           className={clsx(
             "text-[10px] mt-1",
-            outgoing ? "text-red-100" : "text-slate-400"
+            outgoing ? "text-red-100" : "text-slate-500"
           )}
         >
           {time} · {message.channel}

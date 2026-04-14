@@ -1,23 +1,16 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 200" width="240" height="200">
   <defs>
-    <linearGradient id="fred" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#E63946"/>
-      <stop offset="100%" stop-color="#8B1F2F"/>
+    <linearGradient id="gred" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FF2F3D"/>
+      <stop offset="100%" stop-color="#7A0E18"/>
     </linearGradient>
-    <linearGradient id="fblue" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#2D5A9E"/>
-      <stop offset="100%" stop-color="#16324F"/>
+    <linearGradient id="gblue" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2F6BD6"/>
+      <stop offset="100%" stop-color="#0B1E45"/>
     </linearGradient>
-    <filter id="shadow" x="-50%" y="-50%" width="200%" height="200%">
-      <feGaussianBlur in="SourceAlpha" stdDeviation="2.5"/>
-      <feOffset dx="0" dy="2"/>
-      <feComponentTransfer><feFuncA type="linear" slope="0.35"/></feComponentTransfer>
-      <feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge>
-    </filter>
   </defs>
-  <rect x="0" y="0" width="200" height="200" rx="36" ry="36" fill="white"/>
-  <g filter="url(#shadow)" font-family="'Arial Black','Helvetica Neue',Arial,sans-serif" font-size="150" font-weight="900" font-style="italic">
-    <text x="25" y="145" fill="url(#fred)">F</text>
-    <text x="100" y="145" fill="url(#fblue)">7</text>
+  <g transform="skewX(-15) translate(40 0)" font-family="'Arial Black','Helvetica Neue',Arial,sans-serif" font-size="170" font-weight="900">
+    <text x="0" y="148" fill="url(#gred)" stroke="#ffffff" stroke-width="6" paint-order="stroke">F</text>
+    <text x="90" y="148" fill="url(#gblue)" stroke="#ffffff" stroke-width="6" paint-order="stroke">7</text>
   </g>
 </svg>

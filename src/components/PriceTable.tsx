@@ -45,14 +45,14 @@ export function PriceTable({ rows, columns, onUpsert, onDelete }: Props) {
   };
 
   return (
-    <div className="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
-      <div className="flex items-center justify-between px-4 py-3 border-b border-slate-100 bg-slate-50/50">
-        <span className="text-sm text-slate-500">
+    <div className="bg-f7panel rounded-2xl shadow-lg border border-f7border overflow-hidden">
+      <div className="flex items-center justify-between px-4 py-3 border-b border-f7border bg-f7panel2/50">
+        <span className="text-sm text-slate-400">
           {rows.length} {rows.length === 1 ? "registro" : "registros"}
         </span>
         <button
           onClick={openAdd}
-          className="inline-flex items-center gap-2 px-4 py-2 bg-f7red text-white rounded-lg hover:bg-red-700 active:scale-[0.98] font-semibold text-sm shadow-sm transition"
+          className="inline-flex items-center gap-2 px-4 py-2 bg-f7red text-white rounded-lg hover:bg-red-700 active:scale-[0.98] font-semibold text-sm shadow-lg shadow-f7red/20 transition"
         >
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round">
             <path d="M12 5v14M5 12h14" />
@@ -64,18 +64,18 @@ export function PriceTable({ rows, columns, onUpsert, onDelete }: Props) {
       <div className="overflow-x-auto">
         <table className="w-full text-sm border-separate border-spacing-0">
           <thead>
-            <tr className="bg-slate-50">
+            <tr className="bg-f7panel2">
               {columns.map((c, i) => (
                 <th
                   key={c.key}
-                  className={`px-4 py-3 text-left font-semibold text-slate-600 whitespace-nowrap border-b border-slate-200 ${
-                    i === 0 ? "sticky left-0 bg-slate-50 z-10" : ""
+                  className={`px-4 py-3 text-left font-semibold text-slate-300 whitespace-nowrap border-b border-f7border ${
+                    i === 0 ? "sticky left-0 bg-f7panel2 z-10" : ""
                   }`}
                 >
                   {c.label}
                 </th>
               ))}
-              <th className="px-4 py-3 text-right font-semibold text-slate-600 whitespace-nowrap border-b border-slate-200 sticky right-0 bg-slate-50">
+              <th className="px-4 py-3 text-right font-semibold text-slate-300 whitespace-nowrap border-b border-f7border sticky right-0 bg-f7panel2">
                 Acciones
               </th>
             </tr>
@@ -85,41 +85,51 @@ export function PriceTable({ rows, columns, onUpsert, onDelete }: Props) {
               <tr>
                 <td
                   colSpan={columns.length + 1}
-                  className="px-4 py-12 text-center text-slate-400"
+                  className="px-4 py-12 text-center text-slate-500"
                 >
                   Sin registros
                 </td>
               </tr>
             )}
-            {rows.map((row, rowIdx) => (
+            {rows.map((row) => (
               <tr
                 key={row.id}
-                className="hover:bg-slate-50/80 group transition-colors"
+                className="hover:bg-white/[0.03] group transition-colors"
               >
                 {columns.map((c, i) => {
                   const v = row[c.key];
                   let display: React.ReactNode;
                   if (c.type === "boolean") {
                     display = v ? (
-                      <span className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-green-100 text-green-700">✓</span>
+                      <span className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-green-500/15 text-green-400">
+                        ✓
+                      </span>
                     ) : (
-                      <span className="text-slate-300">—</span>
+                      <span className="text-slate-600">—</span>
                     );
                   } else if (c.type === "number") {
-                    display = v !== null && v !== undefined
-                      ? <span className="font-mono tabular-nums">{fmtMoney(v)}</span>
-                      : <span className="text-slate-300">—</span>;
+                    display =
+                      v !== null && v !== undefined ? (
+                        <span className="font-mono tabular-nums text-slate-200">
+                          {fmtMoney(v)}
+                        </span>
+                      ) : (
+                        <span className="text-slate-600">—</span>
+                      );
                   } else {
-                    display = v !== null && v !== undefined && v !== ""
-                      ? <span className="text-slate-800">{String(v)}</span>
-                      : <span className="text-slate-300">—</span>;
+                    display =
+                      v !== null && v !== undefined && v !== "" ? (
+                        <span className="text-slate-100">{String(v)}</span>
+                      ) : (
+                        <span className="text-slate-600">—</span>
+                      );
                   }
                   return (
                     <td
                       key={c.key}
-                      className={`px-4 py-3 whitespace-nowrap border-b border-slate-100 ${
+                      className={`px-4 py-3 whitespace-nowrap border-b border-f7border/60 ${
                         i === 0
-                          ? "sticky left-0 bg-white group-hover:bg-slate-50/80 font-medium text-slate-900 z-10"
+                          ? "sticky left-0 bg-f7panel group-hover:bg-[#161616] font-medium z-10"
                           : ""
                       }`}
                     >
@@ -127,12 +137,12 @@ export function PriceTable({ rows, columns, onUpsert, onDelete }: Props) {
                     </td>
                   );
                 })}
-                <td className="px-4 py-3 text-right whitespace-nowrap border-b border-slate-100 sticky right-0 bg-white group-hover:bg-slate-50/80">
+                <td className="px-4 py-3 text-right whitespace-nowrap border-b border-f7border/60 sticky right-0 bg-f7panel group-hover:bg-[#161616]">
                   <div className="inline-flex items-center gap-1">
                     <button
                       onClick={() => openEdit(row)}
                       title="Editar"
-                      className="p-2 rounded-lg text-slate-500 hover:bg-f7blue/10 hover:text-f7blue transition"
+                      className="p-2 rounded-lg text-slate-400 hover:bg-f7blue/15 hover:text-f7blue transition"
                     >
                       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                         <path d="M12 20h9" />
@@ -142,7 +152,7 @@ export function PriceTable({ rows, columns, onUpsert, onDelete }: Props) {
                     <button
                       onClick={() => onDelete(row.id)}
                       title="Eliminar"
-                      className="p-2 rounded-lg text-slate-500 hover:bg-f7red/10 hover:text-f7red transition"
+                      className="p-2 rounded-lg text-slate-400 hover:bg-f7red/15 hover:text-f7red transition"
                     >
                       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                         <path d="M3 6h18" />
@@ -160,7 +170,7 @@ export function PriceTable({ rows, columns, onUpsert, onDelete }: Props) {
 
       {editing && (
         <div
-          className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4 z-50"
+          className="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4 z-50"
           onClick={(e) => {
             if (e.target === e.currentTarget) {
               setEditing(null);
@@ -168,9 +178,9 @@ export function PriceTable({ rows, columns, onUpsert, onDelete }: Props) {
             }
           }}
         >
-          <div className="bg-white rounded-2xl shadow-2xl max-w-xl w-full max-h-[90vh] overflow-hidden flex flex-col">
-            <div className="px-6 py-4 border-b border-slate-100 flex items-center justify-between">
-              <h2 className="text-lg font-bold text-f7blue">
+          <div className="bg-f7panel border border-f7border rounded-2xl shadow-2xl max-w-xl w-full max-h-[90vh] overflow-hidden flex flex-col">
+            <div className="px-6 py-4 border-b border-f7border flex items-center justify-between">
+              <h2 className="text-lg font-bold text-white">
                 {adding
                   ? "Agregar registro"
                   : `Editar ${editing.brand ?? editing.marca ?? "registro"}`}
@@ -180,7 +190,7 @@ export function PriceTable({ rows, columns, onUpsert, onDelete }: Props) {
                   setEditing(null);
                   setAdding(false);
                 }}
-                className="p-1 rounded-lg text-slate-400 hover:text-slate-700 hover:bg-slate-100"
+                className="p-1 rounded-lg text-slate-500 hover:text-white hover:bg-white/10"
               >
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
                   <path d="M18 6 6 18M6 6l12 12" />
@@ -190,7 +200,7 @@ export function PriceTable({ rows, columns, onUpsert, onDelete }: Props) {
             <div className="px-6 py-5 overflow-y-auto space-y-4">
               {columns.map((c) => (
                 <div key={c.key}>
-                  <label className="block text-sm font-medium text-slate-700 mb-1.5">
+                  <label className="block text-sm font-medium text-slate-300 mb-1.5">
                     {c.label}
                   </label>
                   {c.type === "boolean" ? (
@@ -203,7 +213,7 @@ export function PriceTable({ rows, columns, onUpsert, onDelete }: Props) {
                         }
                         className="w-5 h-5 accent-f7red"
                       />
-                      <span className="text-sm text-slate-600">
+                      <span className="text-sm text-slate-400">
                         {editing[c.key] ? "Sí" : "No"}
                       </span>
                     </label>
@@ -218,7 +228,7 @@ export function PriceTable({ rows, columns, onUpsert, onDelete }: Props) {
                             e.target.value === "" ? null : Number(e.target.value),
                         })
                       }
-                      className="w-full px-3 py-2 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-f7red/40 focus:border-f7red"
+                      className="w-full px-3 py-2 bg-f7panel2 border border-f7border rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-f7red/40 focus:border-f7red"
                     />
                   ) : (
                     <input
@@ -227,27 +237,27 @@ export function PriceTable({ rows, columns, onUpsert, onDelete }: Props) {
                       onChange={(e) =>
                         setEditing({ ...editing, [c.key]: e.target.value })
                       }
-                      className="w-full px-3 py-2 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-f7red/40 focus:border-f7red"
+                      className="w-full px-3 py-2 bg-f7panel2 border border-f7border rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-f7red/40 focus:border-f7red"
                     />
                   )}
                 </div>
               ))}
             </div>
-            <div className="px-6 py-4 border-t border-slate-100 flex justify-end gap-2 bg-slate-50/50">
+            <div className="px-6 py-4 border-t border-f7border flex justify-end gap-2 bg-f7panel2/50">
               <button
                 onClick={() => {
                   setEditing(null);
                   setAdding(false);
                 }}
                 disabled={saving}
-                className="px-4 py-2 text-slate-600 hover:text-slate-900 font-medium"
+                className="px-4 py-2 text-slate-400 hover:text-white font-medium"
               >
                 Cancelar
               </button>
               <button
                 onClick={save}
                 disabled={saving}
-                className="px-5 py-2 bg-f7red text-white rounded-lg font-semibold hover:bg-red-700 active:scale-[0.98] shadow-sm transition disabled:opacity-50"
+                className="px-5 py-2 bg-f7red text-white rounded-lg font-semibold hover:bg-red-700 active:scale-[0.98] shadow-lg shadow-f7red/20 transition disabled:opacity-50"
               >
                 {saving ? "Guardando..." : "Guardar"}
               </button>
