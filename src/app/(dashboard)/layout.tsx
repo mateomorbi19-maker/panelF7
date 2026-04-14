@@ -7,9 +7,9 @@ export default async function DashboardLayout({ children }: { children: React.Re
   const supabase = createClient();
   const { data: { user } } = await supabase.auth.getUser();
   return (
-    <div className="min-h-screen flex">
+    <div className="h-screen flex bg-slate-50">
       <Sidebar userEmail={user?.email ?? null} />
-      <main className="flex-1 overflow-y-auto">{children}</main>
+      <main className="flex-1 min-w-0 overflow-y-auto">{children}</main>
     </div>
   );
 }

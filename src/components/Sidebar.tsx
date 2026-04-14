@@ -22,10 +22,14 @@ export function Sidebar({ userEmail }: { userEmail: string | null }) {
   ];
 
   return (
-    <aside className="w-64 bg-f7dark text-white flex flex-col shrink-0">
-      <div className="p-6 border-b border-white/10">
+    <aside className="w-64 bg-gradient-to-b from-f7dark to-[#0b1929] text-white flex flex-col shrink-0 shadow-xl">
+      <div className="p-5 border-b border-white/10">
         <div className="flex items-center gap-3">
-          <img src="/logo.svg" alt="F7" className="w-10 h-10 bg-white rounded-lg p-1" />
+          <img
+            src="/logo.svg"
+            alt="F7"
+            className="w-12 h-12 bg-white rounded-xl p-1 shadow-md"
+          />
           <div>
             <h1 className="font-bold text-lg leading-tight">Panel F7</h1>
             <p className="text-xs text-slate-400">Automotriz</p>

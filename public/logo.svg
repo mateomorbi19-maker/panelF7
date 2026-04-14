@@ -1,17 +1,23 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
   <defs>
-    <linearGradient id="f7g" x1="0%" y1="0%" x2="100%" y2="100%">
+    <linearGradient id="fred" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" stop-color="#E63946"/>
-      <stop offset="50%" stop-color="#8B1F2F"/>
-      <stop offset="100%" stop-color="#1D3557"/>
+      <stop offset="100%" stop-color="#8B1F2F"/>
+    </linearGradient>
+    <linearGradient id="fblue" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2D5A9E"/>
+      <stop offset="100%" stop-color="#16324F"/>
     </linearGradient>
     <filter id="shadow" x="-50%" y="-50%" width="200%" height="200%">
-      <feGaussianBlur in="SourceAlpha" stdDeviation="3"/>
+      <feGaussianBlur in="SourceAlpha" stdDeviation="2.5"/>
       <feOffset dx="0" dy="2"/>
-      <feComponentTransfer><feFuncA type="linear" slope="0.3"/></feComponentTransfer>
+      <feComponentTransfer><feFuncA type="linear" slope="0.35"/></feComponentTransfer>
       <feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge>
     </filter>
   </defs>
-  <rect x="10" y="10" width="180" height="180" rx="36" ry="36" fill="white" stroke="url(#f7g)" stroke-width="6"/>
-  <text x="100" y="132" text-anchor="middle" font-family="Arial Black, Arial, sans-serif" font-size="110" font-weight="900" fill="url(#f7g)" filter="url(#shadow)">F7</text>
+  <rect x="0" y="0" width="200" height="200" rx="36" ry="36" fill="white"/>
+  <g filter="url(#shadow)" font-family="'Arial Black','Helvetica Neue',Arial,sans-serif" font-size="150" font-weight="900" font-style="italic">
+    <text x="25" y="145" fill="url(#fred)">F</text>
+    <text x="100" y="145" fill="url(#fblue)">7</text>
+  </g>
 </svg>

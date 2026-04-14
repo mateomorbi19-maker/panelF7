@@ -88,19 +88,24 @@ export default function PreciosPage() {
   });
 
   return (
-    <div className="p-6 max-w-7xl mx-auto">
-      <h1 className="text-3xl font-bold text-f7blue mb-4">Precios</h1>
+    <div className="p-6 lg:p-8 min-w-0">
+      <div className="mb-6">
+        <h1 className="text-3xl font-bold text-slate-900">Precios</h1>
+        <p className="text-sm text-slate-500 mt-1">
+          Administrá los precios de cada producto. Los cambios impactan al bot al instante.
+        </p>
+      </div>
 
-      <div className="flex gap-2 mb-4 border-b border-slate-200">
+      <div className="flex gap-1 mb-5 border-b border-slate-200 overflow-x-auto">
         {TABS.map((t) => (
           <button
             key={t.id}
             onClick={() => setTab(t.id)}
             className={clsx(
-              "px-4 py-2 font-medium transition border-b-2 -mb-px",
+              "px-4 py-2.5 font-medium transition border-b-2 -mb-px whitespace-nowrap",
               tab === t.id
                 ? "border-f7red text-f7red"
-                : "border-transparent text-slate-600 hover:text-f7blue"
+                : "border-transparent text-slate-500 hover:text-f7blue"
             )}
           >
             {t.label}
@@ -108,21 +113,35 @@ export default function PreciosPage() {
         ))}
       </div>
 
-      <div className="mb-4 flex justify-between items-center gap-4">
-        <input
-          type="text"
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          placeholder="Buscar por marca, modelo..."
-          className="flex-1 px-4 py-2 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-f7red"
-        />
-        <span className="text-sm text-slate-500 shrink-0">
-          {filtered.length} / {rows.length}
-        </span>
+      <div className="mb-4 flex items-center gap-3">
+        <div className="relative flex-1 max-w-md">
+          <svg
+            className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"
+            width="18" height="18" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
+          >
+            <circle cx="11" cy="11" r="8" />
+            <path d="m21 21-4.3-4.3" />
+          </svg>
+          <input
+            type="text"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            placeholder="Buscar por marca, modelo..."
+            className="w-full pl-10 pr-4 py-2 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-f7red/40 focus:border-f7red bg-white"
+          />
+        </div>
+        {search && (
+          <span className="text-sm text-slate-500 shrink-0">
+            {filtered.length} de {rows.length}
+          </span>
+        )}
       </div>
 
       {loading ? (
-        <p className="text-slate-500">Cargando...</p>
+        <div className="bg-white rounded-2xl border border-slate-200 p-12 text-center text-slate-400">
+          Cargando...
+        </div>
       ) : (
         <PriceTable
           rows={filtered}
