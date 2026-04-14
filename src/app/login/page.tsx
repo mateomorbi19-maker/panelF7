@@ -17,15 +17,25 @@ export default function LoginPage() {
     e.preventDefault();
     setLoading(true);
     setError(null);
-    const supabase = createClient();
-    const { error } = await supabase.auth.signInWithPassword({ email, password });
-    if (error) {
-      setError("Credenciales incorrectas");
+    try {
+      if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
+        throw new Error("Config faltante: NEXT_PUBLIC_SUPABASE_URL/ANON_KEY no estan en el bundle. EasyPanel necesita pasarlas como Build Args.");
+      }
+      const supabase = createClient();
+      const { error } = await supabase.auth.signInWithPassword({ email, password });
+      if (error) {
+        console.error("[login] signIn error:", error);
+        setError(error.message || "Credenciales incorrectas");
+        setLoading(false);
+        return;
+      }
+      router.push("/conversaciones");
+      router.refresh();
+    } catch (err) {
+      console.error("[login] exception:", err);
+      setError("Error de conexión: " + (err instanceof Error ? err.message : String(err)));
       setLoading(false);
-      return;
     }
-    router.push("/conversaciones");
-    router.refresh();
   };
 
   return (
