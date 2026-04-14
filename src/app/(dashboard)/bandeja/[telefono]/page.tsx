@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { notFound } from "next/navigation";
 import { createAdminClient } from "@/lib/supabase/server";
 import { getConversationMeta } from "@/lib/chatwoot";
@@ -44,10 +45,19 @@ export default async function ConversacionDetailPage({
 
   return (
     <div className="flex-1 flex flex-col min-h-0">
-      <div className="border-b border-f7border bg-f7panel px-6 py-4 flex items-center justify-between shrink-0">
-        <div>
-          <h1 className="font-bold text-lg text-white">{telefono}</h1>
-          <div className="flex gap-1 mt-1">
+      <div className="border-b border-f7border bg-f7panel px-4 md:px-6 py-3 md:py-4 flex items-center gap-3 shrink-0">
+        <Link
+          href="/bandeja"
+          className="md:hidden p-2 -ml-2 rounded-lg text-slate-400 hover:text-white hover:bg-white/5"
+          aria-label="Volver"
+        >
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+            <polyline points="15 18 9 12 15 6" />
+          </svg>
+        </Link>
+        <div className="flex-1 min-w-0">
+          <h1 className="font-bold text-base md:text-lg text-white truncate">{telefono}</h1>
+          <div className="flex gap-1 mt-1 flex-wrap">
             {labels.map((l) => (
               <span
                 key={l}
@@ -70,7 +80,7 @@ export default async function ConversacionDetailPage({
         )}
       </div>
 
-      <div className="flex-1 overflow-y-auto p-6 bg-f7black">
+      <div className="flex-1 overflow-y-auto p-4 md:p-6 bg-f7black">
         <div className="max-w-3xl mx-auto space-y-3">
           {messages.map((m) => (
             <MessageBubble key={m.id} message={m} />

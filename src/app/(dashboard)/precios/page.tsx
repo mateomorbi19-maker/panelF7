@@ -107,9 +107,9 @@ export default function PreciosPage() {
   });
 
   return (
-    <div className="flex-1 min-w-0 overflow-y-auto p-6 lg:p-8">
-      <div className="mb-6">
-        <h1 className="text-3xl font-bold text-white">Precios</h1>
+    <div className="flex-1 min-w-0 overflow-y-auto p-4 md:p-6 lg:p-8">
+      <div className="mb-5 md:mb-6">
+        <h1 className="text-2xl md:text-3xl font-bold text-white">Precios</h1>
         <p className="text-sm text-slate-400 mt-1">
           Administrá los precios de cada producto. Los cambios impactan al bot al instante.
         </p>

@@ -1,6 +1,6 @@
 import { createAdminClient } from "@/lib/supabase/server";
 import { getConversationMeta } from "@/lib/chatwoot";
-import { ChatList } from "@/components/ChatList";
+import { BandejaPane } from "@/components/BandejaPane";
 
 export const dynamic = "force-dynamic";
 
@@ -68,9 +68,6 @@ export default async function BandejaLayout({
   const conversations = await getConversations();
 
   return (
-    <div className="flex flex-1 min-w-0 h-full">
-      <ChatList conversations={conversations} />
-      <section className="flex-1 min-w-0 flex flex-col bg-f7black">{children}</section>
-    </div>
+    <BandejaPane conversations={conversations}>{children}</BandejaPane>
   );
 }

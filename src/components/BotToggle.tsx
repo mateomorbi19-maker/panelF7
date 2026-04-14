@@ -42,7 +42,10 @@ export function BotToggle({
         isPending && "opacity-50"
       )}
     >
-      {disabled ? "🔴 Bot pausado — Reactivar" : "🟢 Bot activo — Pausar"}
+      <span className="hidden sm:inline">
+        {disabled ? "🔴 Bot pausado — Reactivar" : "🟢 Bot activo — Pausar"}
+      </span>
+      <span className="sm:hidden">{disabled ? "🔴 Activar" : "🟢 Pausar"}</span>
     </button>
   );
 }

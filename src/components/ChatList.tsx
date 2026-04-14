@@ -32,7 +32,7 @@ export function ChatList({ conversations }: { conversations: Conversation[] }) {
   }, [conversations, q]);
 
   return (
-    <aside className="w-[360px] shrink-0 border-r border-f7border bg-f7panel flex flex-col">
+    <aside className="w-full h-full border-r border-f7border bg-f7panel flex flex-col">
       <div className="p-4 border-b border-f7border shrink-0">
         <div className="flex items-center justify-between mb-3">
           <h2 className="text-lg font-bold text-white">Bandeja de entrada</h2>
