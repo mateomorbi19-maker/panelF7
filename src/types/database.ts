@@ -9,6 +9,7 @@ export type ConversationLogRow = {
   media_url: string | null;
   caption: string | null;
   metadata: Record<string, unknown> | null;
+  sent_from_panel: boolean;
   created_at: string;
 };
 
@@ -49,4 +50,56 @@ export type FundasTipoTapizadoRow = {
   model: string;
   price_5plazas_cash: number | null;
   price_5plazas_transfer: number | null;
+};
+
+export type ContactoRow = {
+  id: string;
+  nombre: string;
+  telefono: string;
+  email: string | null;
+  tipo: "cliente" | "lead_calificado";
+  vehiculo: string | null;
+  ciudad: string | null;
+  etiquetas: string[];
+  ultima_interaccion: string | null;
+  created_at: string;
+};
+
+export type PlantillaBoton =
+  | { tipo: "quick_reply"; texto: string }
+  | { tipo: "url"; texto: string; url: string };
+
+export type PlantillaRow = {
+  id: string;
+  nombre: string;
+  categoria: "marketing" | "utility" | "authentication";
+  idioma: string;
+  header_tipo: "text" | "image" | null;
+  header_contenido: string | null;
+  cuerpo: string;
+  footer: string | null;
+  botones: PlantillaBoton[];
+  estado: "pendiente" | "aprobada" | "rechazada";
+  created_at: string;
+};
+
+export type CampanaRow = {
+  id: string;
+  nombre: string;
+  plantilla_id: string;
+  variables_mapeo: Record<string, string>;
+  total_contactos: number;
+  enviados: number;
+  fallidos: number;
+  estado: "borrador" | "enviando" | "completada";
+  created_at: string;
+  completada_at: string | null;
+};
+
+export type CampanaContactoRow = {
+  id: string;
+  campana_id: string;
+  contacto_id: string;
+  estado: "pendiente" | "enviado" | "fallido";
+  enviado_at: string | null;
 };
