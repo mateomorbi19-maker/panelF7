@@ -50,6 +50,16 @@ export function MessageBubble({ message }: { message: ConversationLogRow }) {
           )}
         >
           {time} · {message.channel}
+          {message.sent_from_panel && (
+            <span
+              className={clsx(
+                "ml-1 italic",
+                outgoing ? "text-red-100/80" : "text-slate-500"
+              )}
+            >
+              • enviado desde panel
+            </span>
+          )}
         </div>
       </div>
     </div>

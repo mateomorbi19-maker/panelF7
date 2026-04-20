@@ -4,6 +4,7 @@ import { createAdminClient } from "@/lib/supabase/server";
 import { getConversationMeta } from "@/lib/chatwoot";
 import { MessageBubble } from "@/components/MessageBubble";
 import { BotToggle } from "@/components/BotToggle";
+import { MessageInput } from "@/components/MessageInput";
 import type { ConversationLogRow } from "@/types/database";
 
 export const dynamic = "force-dynamic";
@@ -87,6 +88,11 @@ export default async function ConversacionDetailPage({
           ))}
         </div>
       </div>
+
+      <MessageInput
+        telefono={telefono}
+        botActivo={!labels.includes("bot_disabled")}
+      />
     </div>
   );
 }

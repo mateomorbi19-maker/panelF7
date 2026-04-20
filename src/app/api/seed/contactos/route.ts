@@ -1,40 +1,43 @@
+// Seed endpoint. Visitar /api/seed/contactos una vez para poblar la DB con 100 contactos ficticios.
+// Si ya hay contactos cargados devuelve 409 y no toca nada.
+
 import { NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase/server";
 
 export const dynamic = "force-dynamic";
 
 const NOMBRES = [
-  "Mateo", "Lucía", "Juan", "Sofía", "Martín", "Camila", "Santiago", "Valentina",
-  "Tomás", "Micaela", "Agustín", "Julieta", "Nicolás", "Florencia", "Facundo",
-  "Brenda", "Lautaro", "Catalina", "Federico", "Antonella", "Emiliano", "Rocío",
-  "Gonzalo", "Milagros", "Franco", "Guadalupe", "Ignacio", "Carolina", "Joaquín",
-  "Renata", "Diego", "Malena", "Ezequiel", "Paula",
+  "Mateo", "Martina", "Joaquín", "Valentina", "Benjamín", "Catalina", "Thiago",
+  "Emma", "Santiago", "Isabella", "Lautaro", "Olivia", "Bautista", "Mía",
+  "Felipe", "Lucía", "Franco", "Julieta", "Ignacio", "Emilia", "Matías",
+  "Camila", "Gonzalo", "Sofía", "Lucas", "Agustina", "Nicolás", "Victoria",
+  "Diego", "Paula", "Martín", "Florencia", "Juan", "Carla", "Sebastián",
 ];
 
 const APELLIDOS = [
-  "González", "Rodríguez", "Gómez", "Fernández", "López", "Díaz", "Martínez",
-  "Pérez", "García", "Sánchez", "Romero", "Sosa", "Torres", "Álvarez", "Ruiz",
-  "Benítez", "Acosta", "Medina", "Herrera", "Suárez", "Aguirre", "Pereyra",
-  "Silva", "Molina", "Castro", "Ortiz", "Vega", "Ramos", "Cabrera", "Figueroa",
-  "Luna", "Arias", "Bianchi", "Paredes",
+  "González", "Rodríguez", "Fernández", "López", "Martínez", "García", "Pérez",
+  "Sánchez", "Romero", "Álvarez", "Torres", "Ruiz", "Ramírez", "Flores",
+  "Benítez", "Acosta", "Medina", "Rojas", "Molina", "Castro", "Ortiz",
+  "Silva", "Núñez", "Vega", "Aguirre", "Herrera", "Cabrera", "Sosa",
+  "Paredes", "Morales", "Gómez", "Díaz", "Ríos", "Ferrari", "Mansilla",
 ];
 
 const CIUDADES = [
   "Mar del Plata", "Buenos Aires", "CABA", "Córdoba", "Rosario", "Mendoza",
   "La Plata", "Tandil", "Bahía Blanca", "Neuquén", "Tucumán", "Salta",
-  "Mar del Tuyú", "Villa Gesell", "Pinamar",
+  "Villa Gesell", "Pinamar", "Balcarce",
 ];
 
 const MODELOS = [
-  "Toyota Corolla", "VW Gol", "Ford Ka", "Chevrolet Onix", "Fiat Cronos",
-  "Peugeot 208", "Renault Sandero", "Toyota Hilux", "VW Amarok", "Ford Ranger",
-  "Chevrolet Tracker", "Jeep Renegade", "Citroen C3", "Fiat Cronos", "Nissan Frontier",
-  "Renault Kangoo", "VW Saveiro", "Ford EcoSport", "Toyota Etios", "Peugeot 2008",
+  "Toyota Corolla", "Volkswagen Gol", "Ford Ka", "Chevrolet Onix", "Fiat Cronos",
+  "Peugeot 208", "Renault Sandero", "Toyota Hilux", "Volkswagen Amarok",
+  "Ford Ranger", "Chevrolet Tracker", "Jeep Renegade", "Citroen C3",
+  "Renault Kangoo", "Fiat Toro", "Nissan Frontier", "Volkswagen Vento",
 ];
 
 const DOMINIOS_EMAIL = ["gmail.com", "hotmail.com", "yahoo.com.ar", "outlook.com"];
 
-const CODIGOS_AREA = ["11", "223", "341", "351", "261", "381", "299", "2914"];
+const CODIGOS_AREA = ["11", "223", "341", "351", "261", "381", "299", "2914", "220", "223"];
 
 const POSIBLES_TAGS = [
   "butacas", "alfombras", "combo", "cuotas", "mayorista",
@@ -99,7 +102,7 @@ function generarContacto(tipo: "cliente" | "lead_calificado", usados: Set<string
   const nombreCompleto = `${nombre} ${apellido}`;
 
   const email = Math.random() < 0.8
-    ? `${stripAccents(nombre).toLowerCase()}.${stripAccents(apellido).toLowerCase()}${randInt(1, 999)}@${pick(DOMINIOS_EMAIL)}`
+    ? `${stripAccents(nombre).toLowerCase()}.${stripAccents(apellido).toLowerCase()}.${randInt(1, 999)}@${pick(DOMINIOS_EMAIL)}`
     : null;
 
   const vehiculo = Math.random() < 0.9
@@ -128,15 +131,7 @@ function generarContacto(tipo: "cliente" | "lead_calificado", usados: Set<string
   };
 }
 
-export async function GET(req: Request) {
-  const { searchParams } = new URL(req.url);
-  const secret = searchParams.get("secret");
-  const expected = process.env.SEED_SECRET;
-
-  if (!expected || secret !== expected) {
-    return NextResponse.json({ error: "unauthorized" }, { status: 401 });
-  }
-
+export async function GET() {
   const admin = createAdminClient();
 
   const { count, error: countError } = await admin
@@ -149,7 +144,7 @@ export async function GET(req: Request) {
 
   if ((count ?? 0) > 0) {
     return NextResponse.json(
-      { ok: false, message: "Ya hay contactos en la DB, seed cancelado" },
+      { ok: false, message: "Ya hay contactos cargados" },
       { status: 409 }
     );
   }

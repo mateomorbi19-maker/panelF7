@@ -83,11 +83,16 @@ export type PlantillaRow = {
   created_at: string;
 };
 
+export type VariableMapeo = {
+  origen: "nombre" | "vehiculo" | "ciudad" | "texto_fijo";
+  valor?: string;
+};
+
 export type CampanaRow = {
   id: string;
   nombre: string;
   plantilla_id: string;
-  variables_mapeo: Record<string, string>;
+  variables_mapeo: Record<string, VariableMapeo>;
   total_contactos: number;
   enviados: number;
   fallidos: number;
