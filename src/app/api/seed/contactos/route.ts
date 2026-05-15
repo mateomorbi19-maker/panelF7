@@ -1,4 +1,4 @@
-// Seed endpoint. Visitar /api/seed/contactos una vez para poblar la DB con 100 contactos ficticios.
+// Seed endpoint. Visitar /api/seed/contactos una vez para poblar la DB con 741 contactos ficticios.
 // Si ya hay contactos cargados devuelve 409 y no toca nada.
 
 import { NextResponse } from "next/server";
@@ -151,8 +151,8 @@ export async function GET() {
 
   const telefonosUsados = new Set<string>();
   const contactos: ContactoInsert[] = [];
-  for (let i = 0; i < 60; i++) contactos.push(generarContacto("cliente", telefonosUsados));
-  for (let i = 0; i < 40; i++) contactos.push(generarContacto("lead_calificado", telefonosUsados));
+  for (let i = 0; i < 445; i++) contactos.push(generarContacto("cliente", telefonosUsados));
+  for (let i = 0; i < 296; i++) contactos.push(generarContacto("lead_calificado", telefonosUsados));
 
   const mezclados = shuffle(contactos);
 
