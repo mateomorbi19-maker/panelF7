@@ -1,7 +1,9 @@
-// Seed endpoint. Visitar /api/seed/contactos una vez para poblar la DB con 741 contactos ficticios.
+// Seed endpoint. Visitar /api/seed/contactos para poblar la DB con 741 contactos ficticios.
 // Si ya hay contactos cargados devuelve 409 y no toca nada.
+// Pasar ?reset=1 para borrar todos los contactos (y campana_contactos por FK) antes de reseedear.
 
 import { NextResponse } from "next/server";
+import type { NextRequest } from "next/server";
 import { createAdminClient } from "@/lib/supabase/server";
 
 export const dynamic = "force-dynamic";
@@ -131,22 +133,40 @@ function generarContacto(tipo: "cliente" | "lead_calificado", usados: Set<string
   };
 }
 
-export async function GET() {
+export async function GET(req: NextRequest) {
   const admin = createAdminClient();
+  const reset = req.nextUrl.searchParams.get("reset") === "1";
 
-  const { count, error: countError } = await admin
-    .from("contactos")
-    .select("*", { count: "exact", head: true });
+  if (reset) {
+    const { error: delPivotErr } = await admin
+      .from("campana_contactos")
+      .delete()
+      .not("id", "is", null);
+    if (delPivotErr) {
+      return NextResponse.json({ error: delPivotErr.message }, { status: 500 });
+    }
+    const { error: delContactosErr } = await admin
+      .from("contactos")
+      .delete()
+      .not("id", "is", null);
+    if (delContactosErr) {
+      return NextResponse.json({ error: delContactosErr.message }, { status: 500 });
+    }
+  } else {
+    const { count, error: countError } = await admin
+      .from("contactos")
+      .select("*", { count: "exact", head: true });
 
-  if (countError) {
-    return NextResponse.json({ error: countError.message }, { status: 500 });
-  }
+    if (countError) {
+      return NextResponse.json({ error: countError.message }, { status: 500 });
+    }
 
-  if ((count ?? 0) > 0) {
-    return NextResponse.json(
-      { ok: false, message: "Ya hay contactos cargados" },
-      { status: 409 }
-    );
+    if ((count ?? 0) > 0) {
+      return NextResponse.json(
+        { ok: false, message: "Ya hay contactos cargados. Usá ?reset=1 para reemplazarlos." },
+        { status: 409 }
+      );
+    }
   }
 
   const telefonosUsados = new Set<string>();
